@@ -19,7 +19,7 @@ public class StoreNbrInListNotInTable {
 		}
 
 		for (int j : B) {
-			if (!set.add(j)) {
+			if (set.add(j)) {
 				result.add(j);
 			}
 		}
