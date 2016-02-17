@@ -1,4 +1,5 @@
 import java.awt.List;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,7 +8,7 @@ import java.util.Set;
  * this one is used to select the store_nbr in the to-add list but has not been
  * added into `srm_stores_new` table
  * 
- * select the elements in B but not A
+ * find out the elements in B but not A
  */
 public class StoreNbrInListNotInTable {
 	@SuppressWarnings("unchecked")
@@ -26,20 +27,53 @@ public class StoreNbrInListNotInTable {
 		return result;
 	}
 
+	private static ArrayList<Integer> fineSame(int[] A, int[] B) {
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		Set set = new HashSet<>();
+		for (int i : A) {
+			set.add(i);
+		}
+
+		for (int j : B) {
+			if (!set.add(j)) {
+				result.add(j);
+			}
+		}
+		return result;
+	}
+
 	public static void main(String args[]) {
+		// what we have in `srm_stores_new`
+		// big list
+		int[] B = { 6962, 7337, 7340, 3798, 1251, 4545, 6243, 3600, 3899, 7146, 6233, 6264, 5014, 4539, 3504, 3628,
+				7304, 7162, 2525, 3121, 7062, 4190, 7222, 3080, 7209, 4551, 7206, 5765, 5017, 5016, 3638, 5378, 2500,
+				6970, 2328, 4431, 6814, 5923, 5377, 7207, 3359, 7217, 7334, 5015, 7235, 5833, 7315, 4149, 5383, 4848,
+				2870, 6997, 6981, 7218, 3037, 6174, 5302, 4157, 7098, 5013, 6176, 7180, 5291, 5024, 7102, 5395, 1250,
+				3470, 2887, 3437, 3211, 5371, 4443, 4432, 6263, 2573, 3713, 3249, 5212, 3456, 5318, 3715, 3411, 4148,
+				7137, 3257, 3646, 4452, 5367, 4147, 4537, 3007, 5084, 4541, 3256, 6828, 5393, 4145, 3338, 7296, 7205,
+				3036, 7004, 3442, 6586, 7329, 5919, 2971, 4536, 4445, 5279, 3724, 4552, 5138, 2414 };
 
-		int[] A = { 563, 1082, 4427, 1172, 3308, 4520, 1297, 2920, 4444, 551, 977, 3307, 3310, 1375, 488, 767, 1205,
-				1090, 5037, 1225, 1081, 5054, 613, 1182, 5172, 579, 538, 3877, 1444, 3702, 1408, 1219, 860, 1077, 1173,
-				1391, 1083, 2626, 1283, 3309, 1223 };
-
-		int[] B = { 488, 538, 551, 563, 579, 613, 767, 860, 977, 1077, 1081, 1082, 1083, 1090, 1172, 1173, 1182, 1205,
-				1219, 1223, 1225, 1283, 1297, 1375, 1391, 1408, 1444, 2626, 2920, 3307, 3308, 3309, 3310, 3702, 3877,
-				4427, 4444, 4520, 5037, 5054, 5172, 555, 556, 588, 593, 605, 606, 635, 639, 686, 754, 758, 836, 843,
-				858, 862, 864, 889, 899, 907, 952, 1006, 1011, 1018, 1024, 1061, 1072, 1076, 1143, 1153, 1227, 1293,
-				1367, 1658, 2615, 2630, 2733, 2754, 2860, 2890, 3570, 3750, 4144, 4556, 5392, 5422, 5735, 5797, 7245,
-				7246 };
+		// in the store list
+		// small list
+		int[] A = { 7334, 7004, 6962, 4148, 3411, 7162, 7207, 5138, 7205, 6828, 5024, 7340, 7337, 3713, 7217, 1250,
+				6264, 5017, 7180, 4147, 3798, 3080, 7235, 3724, 4443, 5014, 7218, 4149, 6997, 3638, 3121, 7098, 5013,
+				2414, 3899, 6814, 3600, 4452, 6176, 3646, 3628, 2887, 3338, 3211, 7222, 2500, 6243, 6174, 4445, 7062,
+				3249, 6586, 7304, 7146, 4157, 7315, 2328, 3257, 2573, 7329, 4145, 3036, 3007, 7296, 3037, 7209, 5015,
+				6263 };
 
 		ArrayList<Integer> res = compare(A, B);
 		System.out.println(res.toString());
+		System.out.println("*******Result Size********");
+		System.out.println(res.size());
+		System.out.println("*******A Size********");
+		System.out.println(A.length);
+		System.out.println("*******B Size********");
+		System.out.println(B.length);
+		System.out.println("*******Same elements********");
+		ArrayList<Integer> sameRes = fineSame(A, B);
+		System.out.println(sameRes.toString());
+		System.out.println("*******Number of Same elements********");
+		System.out.println(sameRes.size());
+
 	}
 }
